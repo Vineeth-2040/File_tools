@@ -12,7 +12,7 @@ def get_directory_info(folder_path,max_depth=3):
                 size=format_size(os.path.getsize(full_path))
                 created_time=os.path.getctime(full_path)
                 modified_time=os.path.getmtime(full_path)
-                result.append({"type":"dir","name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
+                result.append({"type":"dir","path":full_path+"/","name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
 
                 if max_depth-1> current_positon :
                     current_positon+=1
@@ -22,7 +22,7 @@ def get_directory_info(folder_path,max_depth=3):
                 size=format_size(os.path.getsize(full_path))
                 created_time=os.path.getctime(full_path)
                 modified_time=os.path.getmtime(full_path)
-                result.append({"type":"file","name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
+                result.append({"type":"file","path":full_path,"name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
 
 
 
