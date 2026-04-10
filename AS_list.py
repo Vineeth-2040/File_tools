@@ -23,7 +23,7 @@ def get_directory_info(folder_path,max_depth=3):
                 created_time=os.path.getctime(full_path)
                 modified_time=os.path.getmtime(full_path)
                 result.append({"type":"file","path":full_path,"name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
-
+        return result
 
 
     else : 
@@ -40,3 +40,9 @@ def format_size(bytes):
         return f"{bytes / 1024**2:.1f} MB"
     else:
         return f"{bytes / 1024**3:.1f} GB"
+    
+
+
+path= "E:\HRTF"
+result=get_directory_info(path)
+print(result)
