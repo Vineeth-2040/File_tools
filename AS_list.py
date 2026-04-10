@@ -12,7 +12,7 @@ def get_directory_info(folder_path,max_depth=3,current_positon=0):
         full_path=os.path.join(folder_path,file)
         created_time = datetime.fromtimestamp(os.path.getctime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
         modified_time = datetime.fromtimestamp(os.path.getmtime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
-        
+
         if os.path.isdir(full_path):
             result.append({"type":"dir","path":full_path+"/","name":file,"size":None,"created_time":created_time,"modified_time":modified_time})
 
@@ -37,7 +37,8 @@ def format_size(bytes):
     
 
 
+# Testing
 path= r"E:"
-result=get_directory_info(path,1)
+result=get_directory_info(path,3,2)
 for item in result:
     print(f"{item['type'].upper()}: {item['name']} - Size: {item['size']} - Created: {item['created_time']} - Modified: {item['modified_time']}")
