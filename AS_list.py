@@ -1,11 +1,13 @@
 import os
 from datetime import datetime
 
-def get_directory_info(folder_path,max_depth=3,current_positon=0):
+def get_directory_info(folder_path,max_depth=1,current_positon=0):
     result=[]
     try :
         files=os.listdir(folder_path)
     except PermissionError:
+        return result
+    except FileNotFoundError:
         return result
             
     for file in files:
@@ -22,7 +24,7 @@ def get_directory_info(folder_path,max_depth=3,current_positon=0):
         else:
             size=format_size(os.path.getsize(full_path))
             ext=os.path.splitext(file)[1].lower()
-            result.append({"type":"file","path":full_path,"name":file,"ext":ext,"size":size,"created_time":created_time,"modified_time":modified_time})
+            result.append({"type":"file","path":full_path,"name":file,"ext":ext,"size":size,"created_time":created_time,"modified_time":modified_time,})
     return result
 
 
