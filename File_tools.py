@@ -23,8 +23,8 @@ def search_filesystem(root, query=None, ext=None, max_depth=3, file_type=None):
     return {"found": True, "permission": "granted", "count": len(result), "items": result}
 
 
-# This is version one do not use THis  funtion in prdcution . i kept it because i wrote it so.
-#def keyword_search(path, keyword, context_lines=2):
+
+def exact_keyword_search(path, keyword, context_lines=2):
     try:
         with open(path, "r", encoding="utf-8") as f:
             lines = f.readlines()
@@ -64,7 +64,7 @@ def search_filesystem(root, query=None, ext=None, max_depth=3, file_type=None):
 
 
 
-def keyword_search_file_reader(path, query, context_lines=2, threshold=0.5):
+def context_search(path, query, context_lines=2, threshold=0.5):
 
     STOP_WORDS = {
         "where", "did", "i", "write", "the", "a", "an", "is", "it",
@@ -94,7 +94,8 @@ def keyword_search_file_reader(path, query, context_lines=2, threshold=0.5):
 
     for i, line in enumerate(lines):
         line_lower = line.lower()
-        matched_words = [w for w in keywords if w in line_lower]
+        line_words = line_lower.split()
+        matched_words = [w for w in keywords if w in line_words]
         score = len(matched_words) / len(keywords)
 
         if score >= threshold:
