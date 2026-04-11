@@ -1,6 +1,14 @@
 import os 
 from datetime import datetime
 
+
+tools={
+    "get_directory_info": get_directory_info,
+    "search_filesystem": search_filesystem,
+    "exact_keyword_search": exact_keyword_search,
+    "context_search": context_search
+}
+
 def get_directory_info(folder_path,max_depth=1,current_positon=0):
     result=[]
     try :
