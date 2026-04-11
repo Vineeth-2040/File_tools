@@ -1,5 +1,4 @@
 import os 
-from AS_list import get_directory_info
 from datetime import datetime
 
 def get_directory_info(folder_path,max_depth=1,current_positon=0):
