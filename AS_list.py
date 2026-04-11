@@ -14,14 +14,15 @@ def get_directory_info(folder_path,max_depth=3,current_positon=0):
         modified_time = datetime.fromtimestamp(os.path.getmtime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
 
         if os.path.isdir(full_path):
-            result.append({"type":"dir","path":full_path+"/","name":file,"size":None,"created_time":created_time,"modified_time":modified_time})
+            result.append({"type":"dir","path":full_path+"/","name":file,"ext":None,"size":None,"created_time":created_time,"modified_time":modified_time})
 
             if current_positon < max_depth-1 :
                 result.extend(get_directory_info(full_path,max_depth,current_positon+1))
 
         else:
             size=format_size(os.path.getsize(full_path))
-            result.append({"type":"file","path":full_path,"name":file,"size":size,"created_time":created_time,"modified_time":modified_time})
+            ext=os.path.splitext(file)[1].lower()
+            result.append({"type":"file","path":full_path,"name":file,"ext":ext,"size":size,"created_time":created_time,"modified_time":modified_time})
     return result
 
 
