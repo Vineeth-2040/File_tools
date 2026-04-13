@@ -1,13 +1,5 @@
-import os 
+import os
 from datetime import datetime
-
-
-tools={
-    "get_directory_info": get_directory_info,
-    "search_filesystem": search_filesystem,
-    "exact_keyword_search": exact_keyword_search,
-    "context_search": context_search
-}
 
 def get_directory_info(folder_path,max_depth=1,current_positon=0):
     result=[]
@@ -20,8 +12,20 @@ def get_directory_info(folder_path,max_depth=1,current_positon=0):
             
     for file in files:
         full_path=os.path.join(folder_path,file)
-        created_time = datetime.fromtimestamp(os.path.getctime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
-        modified_time = datetime.fromtimestamp(os.path.getmtime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
+
+        # skip if osme issue with file like permission or file not found, just ignore and continue
+        if not os.path.exists(full_path):
+            continue
+        # skip if max_depth greater than 5 to avoid too long time
+        if max_depth<=5:
+            try:
+                created_time = datetime.fromtimestamp(os.path.getctime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
+                modified_time = datetime.fromtimestamp(os.path.getmtime(full_path)).strftime("%Y-%m-%d %H:%M:%S")
+            except FileNotFoundError:
+                continue
+        else :
+                created_time = None
+                modified_time = None
 
         if os.path.isdir(full_path):
             result.append({"type":"dir","path":full_path+"/","name":file,"ext":None,"size":None,"created_time":created_time,"modified_time":modified_time})
@@ -46,13 +50,13 @@ def format_size(bytes):
         return f"{bytes / 1024**3:.1f} GB"
 
 
-def search_filesystem(root, query=None, ext=None, max_depth=3, file_type=None):
+def search_filesystem(root, query=None, ext=None, max_depth=3, file_type=None,current_posotion=0):
     
     # check permission first
     if not os.access(root, os.R_OK):
         return {"found": False, "permission": "denied", "count": 0, "items": []}
     
-    result = get_directory_info(root, max_depth)
+    result = get_directory_info(root, max_depth, current_posotion)
 
     if file_type:
         result = [f for f in result if f["type"] == file_type]
@@ -70,7 +74,7 @@ def search_filesystem(root, query=None, ext=None, max_depth=3, file_type=None):
 
 def exact_keyword_search(path, keyword, context_lines=2):
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, "r",encoding="utf-8") as f:
             lines = f.readlines()
     except PermissionError:
         return {"found": False, "reason": "permission denied"}
@@ -172,3 +176,13 @@ def context_search(path, query, context_lines=2, threshold=0.5):
         "keywords_searched": keywords,
         "matches": matches
     }
+
+
+tools = {
+    "get_directory_info": get_directory_info,
+    "search_filesystem": search_filesystem,
+    "exact_keyword_search": exact_keyword_search,
+    "context_search": context_search,
+}
+
+
