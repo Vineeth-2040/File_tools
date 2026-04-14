@@ -1,0 +1,36 @@
+FILE SYSTEM          ✅ mostly done
+├── read file
+├── search by keyword
+├── semantic search
+├── context search
+├── file scanner
+└── folder scanner
+
+VISION               🔲 not built
+├── screenshot
+├── read screen text (OCR)
+└── understand what's on screen
+
+APPS                 🔨 building now
+├── list apps
+├── open app
+├── close app
+└── check if app is running
+
+WEB                  🔲 not built
+├── open URL
+├── google search
+├── scrape page content
+└── web apps (claude, chatgpt)
+
+MOUSE & KEYBOARD     🔲 planned
+├── click (x,y)
+├── type text
+├── scroll
+├── hotkeys
+└── screenshot trigger
+
+MEMORY               ❓ thought about?
+├── save context
+├── recall past sessions
+└── user preferences
